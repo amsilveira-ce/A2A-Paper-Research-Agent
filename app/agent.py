@@ -124,7 +124,7 @@ class PaperResearchAgent():
 
         self.tools = [search_arXiv]
         self.llm_with_tools = llama.bind_tools(self.tools)
-        self.memory = MemorySaver()
+        self.memory = MemorySaver() # 
         self.graph = self._build_graph()
         print(self.graph)
 
@@ -166,6 +166,7 @@ class PaperResearchAgent():
         return result 
     
     def stream(self, query: str, thread_id: str = "default"):
+        ''''''
         config = {"configurable": {"thread_id": thread_id}}
 
         for event in self.graph.stream(
@@ -178,9 +179,17 @@ class PaperResearchAgent():
 if __name__ == "__main__":
     # Run this file to teste how the Paper Research Agent works and test new integrations
     agent = PaperResearchAgent()
-    result = agent.invoke(query="Find recent papers on transformer models")
-    
-    # Print the last message
-    if result and "messages" in result:
-        last_message = result["messages"][-1]
-        print(f"Agent response: {last_message.content}")
+
+    debug_mode = input("Do you want stream mode? type yes or not: ")
+
+   
+    if debug_mode=="yes":
+        print("Streaming response:\n")   
+        for event in agent.stream(query="Find recent papers on diffusion models"):       
+            print(event)
+    else:
+        # Print the last message
+        result = agent.invoke(query="Find recent papers on transformer models")
+        if result and "messages" in result:
+            last_message = result["messages"][-1]
+            print(f"Agent response: {last_message.content}")
