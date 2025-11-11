@@ -141,7 +141,7 @@ class PaperAgentExecutor(AgentExecutor):
             "name": "Paper Researcher Agent", 
             "description": "Agent specialized in finding and analyzing academic papers from arXiv", 
             "version": "1.0.0", 
-            "capabilitities": {
+            "capabilities": {
                 "streaming": True, 
                 "mult_turn": True, 
                 "tools": [
